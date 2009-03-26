@@ -1,0 +1,148 @@
+diff -ur scalix-installer/build.xml scalix-installer.new/build.xml
+--- scalix-installer/build.xml	2009-01-10 00:01:59.000000000 +0100
++++ scalix-installer.new/build.xml	2009-03-26 11:47:38.489771270 +0100
+@@ -43,20 +43,24 @@
+         <property name="py22.dir" value="py22"/>
+         <property name="py23.dir" value="py23"/>
+         <property name="py24.dir" value="py24"/>
++	<property name="py25.dir" value="py25"/>
++	<property name="py26.dir" value="py26"/>
+     </target>
+     
+     <!-- test -->
+-    <target name="test" depends="test22, test23, test24">
+-        <condition property="py22.or.py23.or.py24" value="true">
++    <target name="test" depends="test22, test23, test24, test25, test26">
++        <condition property="py22.or.py23.or.py24.or.py25.or.py26" value="true">
+             <or>
+                 <isset property="py22.set"/>
+                 <isset property="py23.set"/>
+-                <isset property="py24.set"/>
++		<isset property="py24.set"/>
++		<isset property="py25.set"/>
++		<isset property="py26.set"/>
+             </or>
+         </condition>
+     </target>
+     
+-    <target name="pytest" unless="py22.or.py23.or.py24">
++    <target name="pytest" unless="py22.or.py23.or.py24.or.py25.or.py26">
+         <exec executable="which" outputproperty="pyexe">
+             <arg line="python"/>
+         </exec>
+@@ -91,6 +95,16 @@
+         <property name="py24.set" value="true"/>
+     </target>
+ 
++    <target name="test25" if="env.PYTHON25">
++        <echo message="Python 2.5.x specified at ${env.PYTHON25}"/>
++        <property name="py25.set" value="true"/>
++    </target>
++
++    <target name="test26" if="env.PYTHON26">
++        <echo message="Python 2.6.x specified at ${env.PYTHON26}"/>
++        <property name="py26.set" value="true"/>
++    </target>
++
+     <!-- clean -->
+     <target name="clean" description="Clean up build and dist directory">
+         <delete dir="build"/>
+@@ -103,7 +117,7 @@
+     </target>
+ 
+     <!-- compile -->
+-    <target name="compile" depends="init, compile.py22, compile.py23, compile.py24"/>
++    <target name="compile" depends="init, compile.py22, compile.py23, compile.py24, compile.py25, compile.py26"/>
+ 
+     <target name="compile.py22" description="Compile python sources into 2.2 byte code" if="env.PYTHON22">
+         <mkdir dir="${build.dir}/${py22.dir}"/>
+@@ -149,9 +163,39 @@
+             <fileset dir="${build.dir}/${py24.dir}" includes="**/*.py"/>
+         </delete>
+     </target>
+-    
++   
++    <target name="compile.py25" description="Compile python sources into 2.5 byte code" if="env.PYTHON25">
++        <mkdir dir="${build.dir}/${py25.dir}"/>
++        <copy todir="${build.dir}/${py25.dir}">
++            <fileset dir="." includes="*.py, lib/*.py, logging/*.py, version.properties" excludes="compile.py"/>
++        </copy>
++        <exec executable="${env.PYTHON25}" failonerror="true">
++            <!--<arg value="-OO"/>-->
++            <arg line="compile.py"/>
++            <arg value="--dir=${build.dir}/${py25.dir}"/>
++        </exec>
++        <delete>
++            <fileset dir="${build.dir}/${py25.dir}" includes="**/*.py"/>
++        </delete>
++    </target>
++
++    <target name="compile.py26" description="Compile python sources into 2.6 byte code" if="env.PYTHON26">
++        <mkdir dir="${build.dir}/${py26.dir}"/>
++        <copy todir="${build.dir}/${py26.dir}">
++            <fileset dir="." includes="*.py, lib/*.py, logging/*.py, version.properties" excludes="compile.py"/>
++        </copy>
++        <exec executable="${env.PYTHON26}" failonerror="true">
++            <!--<arg value="-OO"/>-->
++            <arg line="compile.py"/>
++            <arg value="--dir=${build.dir}/${py26.dir}"/>
++        </exec>
++        <delete>
++            <fileset dir="${build.dir}/${py26.dir}" includes="**/*.py"/>
++        </delete>
++    </target>
++ 
+     <!-- images -->
+-    <target name="copy.images" depends="init, copy.images.py22, copy.images.py23, copy.images.py24"/>
++    <target name="copy.images" depends="init, copy.images.py22, copy.images.py23, copy.images.py24, copy.images.py25, copy.images.py26"/>
+ 
+     <target name="copy.images.py22" if="env.PYTHON22">
+         <copy todir="${build.dir}/${py22.dir}">
+@@ -171,6 +215,18 @@
+         </copy>
+     </target>
+ 
++    <target name="copy.images.py25" if="env.PYTHON25">
++        <copy todir="${build.dir}/${py25.dir}">
++            <fileset dir="." includes="images/*"/>
++        </copy>
++    </target>
++
++    <target name="copy.images.py26" if="env.PYTHON26">
++        <copy todir="${build.dir}/${py26.dir}">
++            <fileset dir="." includes="images/*"/>
++        </copy>
++    </target>
++
+     <target name="copy.images.src">
+         <copy todir="${build.dir}/src">
+             <fileset dir="." includes="images/*"/>
+@@ -178,7 +234,7 @@
+     </target>
+ 
+     <!-- server -->
+-    <target name="copy.server" depends="init, copy.server.py22, copy.server.py23, copy.server.py24"/>
++    <target name="copy.server" depends="init, copy.server.py22, copy.server.py23, copy.server.py24, copy.server.py25, copy.server.py26"/>
+ 
+     <target name="copy.server.py22" if="env.PYTHON22">
+         <copy todir="${build.dir}/${py22.dir}">
+@@ -198,6 +254,19 @@
+         </copy>
+     </target>
+ 
++    <target name="copy.server.py25" if="env.PYTHON25">
++        <copy todir="${build.dir}/${py25.dir}">
++            <fileset dir="." includes="server/**/*"/>
++        </copy>
++    </target>
++
++    <target name="copy.server.py26" if="env.PYTHON26">
++        <copy todir="${build.dir}/${py24.dir}">
++            <fileset dir="." includes="server/**/*"/>
++        </copy>
++    </target>
++
++
+     <!-- zip -->
+     <target name="zip" depends="init, compile, copy.images, copy.server" description="Create a tar.gz file">
+         <delete file="${build.dir}/merlin.tar.gz"/>
