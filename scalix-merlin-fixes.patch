@@ -1,0 +1,50 @@
+--- scalix-installer/archive/merlin-header	2009-01-10 00:02:00.000000000 +0100
++++ scalix-installer.new/archive/merlin-header	2009-03-26 13:23:55.001843948 +0100
+@@ -104,13 +104,13 @@
+ alias which='type -p'
+ 
+ # determine Python executable
+-PYTHON_BIN=`which python 2> /dev/null`
++PYTHON_BIN=/usr/bin/python
+ if [ $? -ne 0 ]; then
+     die "Error: Can't find Python in $PATH. Aborting."
+ fi
+ 
+ # check we have Perl somewhere
+-PERL_BIN=`which perl 2> /dev/null`
++PERL_BIN=/usr/bin/perl
+ if [ $? -ne 0 ]; then
+     die "Error: Can't find perl. It must be installed to use the Scalix Installer. Aborting."
+ fi
+@@ -123,7 +123,21 @@
+ 
+ # determine Python version and build prefix and check minimal version:
+ PYTHON_VERSION=`$PYTHON_BIN -V 2>&1 | sed -e 's/Python //g'`
+-PY_SUBDIR="py"
++if [[ $PYTHON_VERSION >  2.2.2 && $PYTHON_VERSION < 2.3 ]]; then
++PY_SUBDIR="py22"
++fi
++if [[ $PYTHON_VERSION > 2.3 && $PYTHON_VERSION < 2.4 ]]; then
++PY_SUBDIR="py23"
++fi
++if [[ $PYTHON_VERSION > 2.4 && $PYTHON_VERSION < 2.5 ]]; then
++PY_SUBDIR="py24"
++fi
++if [[ $PYTHON_VERSION > 2.5 && $PYTHON_VERSION < 2.6 ]]; then
++PY_SUBDIR="py25"
++fi
++if [[ $PYTHON_VERSION > 2.6 && $PYTHON_VERSION < 2.7 ]] then
++PY_SUBDIR="py26"
++fi
+ 
+ MIN_VERSION="2.2.2"
+ 
+@@ -145,7 +159,7 @@
+ my_echo "$OUR_NAME - extracting archive, please wait..."
+ 
+ # Take the TGZ portion of this file and pipe it to tar.
+-tail -n +$SKIP $0 | tar xzm -C "$WRKDIR"
++tail -n +$SKIP $0 | tar zxf - -C "$WRKDIR"
+ 
+ ORIG_DIR=`pwd`
+ 
