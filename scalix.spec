@@ -20,6 +20,11 @@ BuildRequires:	antlr >= 2.7.6
 BuildRequires:	asm2 >= 2.2.3
 BuildRequires:	java-mail
 BuildRequires:	java-servletapi5
+BuildRequires:	java-commons-cli
+BuildRequires:	java-commons-codec
+BuildRequires:	java-commons-collections
+BuildRequires:	java-commons-httpclient
+BuildRequires:	java-commons-lang
 BuildRequires:	java-commons-logging
 BuildRequires:	java-sun
 BuildRequires:	python-devel >= 2.2.2
@@ -57,9 +62,9 @@ Mobile Scalix
 
 %build
 
-CLASSPATH=$(build-classpath activation antlr asm commons-logging mail servlet)
+CLASSPATH=$(build-classpath activation antlr asm commons-cli commons-codec commons-collections commons-httpclient commons-lang commons-logging mail servlet)
 #PACKAGES="installer mobile platform sac sis"
-PACKAGES="installer platform"
+PACKAGES="installer mobile"
 
 for i in $PACKAGES
 do
