@@ -12,6 +12,7 @@ Group:		Applications/WWW
 Source0:	http://downloads.scalix.com/.opensource/11.4.3/%{name}-%{version}-GA-source.tgz
 # Source0-md5:	fb4794f841319ed07605a8619e5a9c36
 Patch0:		%{name}-python25_26.patch
+Patch1:		%{name}-merlin-fixes.patch
 URL:		http://www.scalix.com/community/
 BuildRequires:	ant >= 1.6.5
 BuildRequires:	java-sun
@@ -45,6 +46,7 @@ Mobile Scalix
 %{__tar} zxf scalix-sac-src.tgz
 %{__tar} zxf scalix-sis-src.tgz
 %patch0 -p0
+%patch1 -p0
 
 #PACKAGES="installer mobile platform sac sis"
 PACKAGES="installer"
