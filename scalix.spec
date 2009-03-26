@@ -13,6 +13,7 @@ Source0:	http://downloads.scalix.com/.opensource/11.4.3/%{name}-%{version}-GA-so
 # Source0-md5:	fb4794f841319ed07605a8619e5a9c36
 Patch0:		%{name}-python25_26.patch
 Patch1:		%{name}-merlin-fixes.patch
+Patch2:		%{name}-build.patch
 URL:		http://www.scalix.com/community/
 BuildRequires:	ant >= 1.6.5
 BuildRequires:	java-sun
@@ -47,8 +48,11 @@ Mobile Scalix
 %{__tar} zxf scalix-sis-src.tgz
 %patch0 -p0
 %patch1 -p0
+%patch2 -p1
 
 %build
+
+CLASSPATH=$(build-classpath mail servlet)
 #PACKAGES="installer mobile platform sac sis"
 PACKAGES="installer"
 
