@@ -48,6 +48,7 @@ Mobile Scalix
 %patch0 -p0
 %patch1 -p0
 
+%build
 #PACKAGES="installer mobile platform sac sis"
 PACKAGES="installer"
 
