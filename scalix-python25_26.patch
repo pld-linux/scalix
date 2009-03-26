@@ -137,7 +137,7 @@ diff -ur scalix-installer/build.xml scalix-installer.new/build.xml
 +    </target>
 +
 +    <target name="copy.server.py26" if="env.PYTHON26">
-+        <copy todir="${build.dir}/${py24.dir}">
++        <copy todir="${build.dir}/${py26.dir}">
 +            <fileset dir="." includes="server/**/*"/>
 +        </copy>
 +    </target>
