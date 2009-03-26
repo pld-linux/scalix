@@ -23,6 +23,8 @@ Scalix Platform
 %package installer
 Summary:	Scalix Platform Installer
 Group:		Applications/WWW
+Requires:	awk
+Requires:	perl-base
 
 %description installer
 Installer for Scalix Platform
@@ -42,7 +44,8 @@ Mobile Scalix
 %{__tar} zxf scalix-sac-src.tgz
 %{__tar} zxf scalix-sis-src.tgz
 
-PACKAGES="installer mobile platform sac sis"
+#PACKAGES="installer mobile platform sac sis"
+PACKAGES="installer"
 
 for i in $PACKAGES
 do
