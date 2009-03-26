@@ -9,12 +9,13 @@ Release:	0.1
 # http://www.scalix.com/community/opensource/licensing.php
 License:	Scalix Public License (SPL)
 Group:		Applications/WWW
-Source0:	http://downloads.scalix.com/.opensource/11.4.3/%{name}-%{version}-GA-source.tgz	
+Source0:	http://downloads.scalix.com/.opensource/11.4.3/%{name}-%{version}-GA-source.tgz
 # Source0-md5:	fb4794f841319ed07605a8619e5a9c36
+Patch0:		%{name}-python25_26.patch
 URL:		http://www.scalix.com/community/
 BuildRequires:	ant >= 1.6.5
-BuildRequires:	python-devel >= 2.4
 BuildRequires:	java-sun
+BuildRequires:	python-devel >= 2.2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -30,8 +31,8 @@ Requires:	perl-base
 Installer for Scalix Platform
 
 %package mobile
-Summary:        Scalix Platform for Mobile
-Group:          Applications/WWW
+Summary:	Scalix Platform for Mobile
+Group:		Applications/WWW
 
 %description mobile
 Mobile Scalix
@@ -43,6 +44,7 @@ Mobile Scalix
 %{__tar} zxf scalix-platform-src.tgz
 %{__tar} zxf scalix-sac-src.tgz
 %{__tar} zxf scalix-sis-src.tgz
+%patch0 -p0
 
 #PACKAGES="installer mobile platform sac sis"
 PACKAGES="installer"
@@ -67,5 +69,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 
 %files installer
-%defattr(644,root,root,755
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/scalix-installer
