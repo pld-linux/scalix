@@ -16,6 +16,8 @@ Patch1:		%{name}-merlin-fixes.patch
 Patch2:		%{name}-build.patch
 URL:		http://www.scalix.com/community/
 BuildRequires:	ant >= 1.6.5
+BuildRequires:	java-mail
+BuildRequires:	java-servletapi5
 BuildRequires:	java-sun
 BuildRequires:	python-devel >= 2.2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
