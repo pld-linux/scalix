@@ -16,8 +16,11 @@ Patch1:		%{name}-merlin-fixes.patch
 Patch2:		%{name}-build.patch
 URL:		http://www.scalix.com/community/
 BuildRequires:	ant >= 1.6.5
+BuildRequires:	antlr >= 2.7.6
+BuildRequires:	asm2 >= 2.2.3
 BuildRequires:	java-mail
 BuildRequires:	java-servletapi5
+BuildRequires:	java-commons-logging
 BuildRequires:	java-sun
 BuildRequires:	python-devel >= 2.2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -50,19 +53,19 @@ Mobile Scalix
 %{__tar} zxf scalix-sis-src.tgz
 %patch0 -p0
 %patch1 -p0
-%patch2 -p1
+#%patch2 -p1
 
 %build
 
-CLASSPATH=$(build-classpath mail servlet)
+CLASSPATH=$(build-classpath activation antlr asm commons-logging mail servlet)
 #PACKAGES="installer mobile platform sac sis"
-PACKAGES="installer"
+PACKAGES="installer platform"
 
 for i in $PACKAGES
 do
 cd scalix-$i
 install -d build
-%ant
+%ant -Dbuild.sysclasspath=only
 cd -
 done
 
