@@ -65,7 +65,7 @@ Mobile Scalix
 
 %build
 
-CLASSPATH=$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-httpclient commons-lang commons-logging ical4j log4j mail servlet)
+CLASSPATH=$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-httpclient commons-lang commons-logging ical4j log4j lucene jsp-api mail servlet)
 #PACKAGES="installer mobile platform sac sis"
 PACKAGES="installer sis"
 
