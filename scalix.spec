@@ -18,14 +18,17 @@ URL:		http://www.scalix.com/community/
 BuildRequires:	ant >= 1.6.5
 BuildRequires:	antlr >= 2.7.6
 BuildRequires:	asm2 >= 2.2.3
-BuildRequires:	java-mail
-BuildRequires:	java-servletapi5
 BuildRequires:	java-commons-cli
 BuildRequires:	java-commons-codec
 BuildRequires:	java-commons-collections
 BuildRequires:	java-commons-httpclient
 BuildRequires:	java-commons-lang
 BuildRequires:	java-commons-logging
+BuildRequires:	java-ical4j
+BuildRequires:	java-log4j
+BuildRequires:	java-lucene
+BuildRequires:	java-mail
+BuildRequires:	java-servletapi5
 BuildRequires:	java-sun
 BuildRequires:	python-devel >= 2.2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -62,9 +65,9 @@ Mobile Scalix
 
 %build
 
-CLASSPATH=$(build-classpath activation antlr asm commons-cli commons-codec commons-collections commons-httpclient commons-lang commons-logging mail servlet)
+CLASSPATH=$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-httpclient commons-lang commons-logging ical4j log4j mail servlet)
 #PACKAGES="installer mobile platform sac sis"
-PACKAGES="installer mobile"
+PACKAGES="installer sis"
 
 for i in $PACKAGES
 do
@@ -76,6 +79,7 @@ done
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 install -d $RPM_BUILD_ROOT%{_sbindir}
 install scalix-installer/dist/scalix-installer $RPM_BUILD_ROOT%{_sbindir}/scalix-installer
 
