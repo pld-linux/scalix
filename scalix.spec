@@ -17,6 +17,7 @@ License:	Scalix Public License (SPL)
 Group:		Applications/WWW
 Source0:	http://downloads.scalix.com/.opensource/11.4.3/%{name}-%{version}-GA-source.tgz
 # Source0-md5:	fb4794f841319ed07605a8619e5a9c36
+Source1:	%{name}-sis-context.xml
 Patch0:		%{name}-python25_26.patch
 Patch1:		%{name}-merlin-fixes.patch
 Patch2:		%{name}-build.patch
@@ -95,17 +96,22 @@ done
 %install
 rm -rf $RPM_BUILD_ROOT
 
+install -d $RPM_BUILD_ROOT%{_datadir}/scalix
+
 # Installer
 install -d $RPM_BUILD_ROOT%{_sbindir}
 install scalix-installer/dist/scalix-installer $RPM_BUILD_ROOT%{_sbindir}/scalix-installer
 
 # SIS
+install %SOURCE1 $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-sis.xml
+cp -a scalix-sis/build/war $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-sis
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%dir %{_datadir}/scalix
 
 %files installer
 %defattr(644,root,root,755)
@@ -113,3 +119,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files sis
 %defattr(644,root,root,755)
+%config(noreplace) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-sis.xml
+%{_datadir}/scalix/scalix-sis
