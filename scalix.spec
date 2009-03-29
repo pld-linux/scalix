@@ -26,7 +26,7 @@ BuildRequires:	java-commons-lang
 BuildRequires:	java-commons-logging
 BuildRequires:	java-ical4j
 BuildRequires:	java-log4j
-BuildRequires:	java-lucene
+BuildRequires:	java-lucene-contrib
 BuildRequires:	java-mail
 BuildRequires:	java-servletapi5
 BuildRequires:	java-sun
@@ -52,6 +52,14 @@ Group:		Applications/WWW
 %description mobile
 Mobile Scalix
 
+%package sis
+Summary:	Scalix SIS
+Group:		Applications/WWW
+Requires:	%{name} = %{version}
+
+%description sis
+SIS for Scalix
+
 %prep
 %setup -qc
 %{__tar} zxf scalix-installer-src.tgz
@@ -65,7 +73,7 @@ Mobile Scalix
 
 %build
 
-CLASSPATH=$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-httpclient commons-lang commons-logging ical4j log4j lucene jsp-api mail servlet)
+CLASSPATH=$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jsp-api mail servlet)
 #PACKAGES="installer mobile platform sac sis"
 PACKAGES="installer sis"
 
@@ -80,8 +88,11 @@ done
 %install
 rm -rf $RPM_BUILD_ROOT
 
+# Installer
 install -d $RPM_BUILD_ROOT%{_sbindir}
 install scalix-installer/dist/scalix-installer $RPM_BUILD_ROOT%{_sbindir}/scalix-installer
+
+# SIS
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -92,3 +103,6 @@ rm -rf $RPM_BUILD_ROOT
 %files installer
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/scalix-installer
+
+%files sis
+%defattr(644,root,root,755)
