@@ -1,7 +1,13 @@
-#
 # TODO:
 # - add subpackages for $PACKAGES
 # - fix tomcat.home
+%bcond_with     java_sun        # build with java-sun
+
+%if "%{pld_release}" == "ti"
+%define with_java_sun   1
+%endif
+
+%include        /usr/lib/rpm/macros.java
 Summary:	Scalix Platform
 Name:		scalix
 Version:	11.4.3
@@ -29,8 +35,9 @@ BuildRequires:	java-log4j
 BuildRequires:	java-lucene-contrib
 BuildRequires:	java-mail
 BuildRequires:	java-servletapi5
-BuildRequires:	java-sun
 BuildRequires:	python-devel >= 2.2.2
+%{!?with_java_sun:BuildRequires:        java-gcj-compat-devel}
+%{?with_java_sun:BuildRequires: java-sun}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
