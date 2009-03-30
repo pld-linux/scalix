@@ -23,6 +23,8 @@ Patch1:		%{name}-merlin-fixes.patch
 Patch2:		%{name}-build.patch
 URL:		http://www.scalix.com/community/
 BuildRequires:	ant >= 1.6.5
+BuildRequires:	ant-junit
+BuildRequires:	ant-nodeps
 BuildRequires:	antlr >= 2.7.6
 BuildRequires:	asm2 >= 2.2.3
 BuildRequires:	java-commons-cli
@@ -31,14 +33,15 @@ BuildRequires:	java-commons-collections
 BuildRequires:	java-commons-httpclient
 BuildRequires:	java-commons-lang
 BuildRequires:	java-commons-logging
+%{!?with_java_sun:BuildRequires:        java-gcj-compat-devel}
 BuildRequires:	java-ical4j
 BuildRequires:	java-log4j
 BuildRequires:	java-lucene-contrib
 BuildRequires:	java-mail
 BuildRequires:	java-servletapi5
-BuildRequires:	python-devel >= 2.2.2
-%{!?with_java_sun:BuildRequires:        java-gcj-compat-devel}
 %{?with_java_sun:BuildRequires: java-sun}
+BuildRequires:	python-devel >= 2.2.2
+Requires:	apache-tomcat
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -83,12 +86,13 @@ SIS for Scalix
 
 CLASSPATH=$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jsp-api mail servlet)
 #PACKAGES="installer mobile platform sac sis"
-PACKAGES="installer sis"
+PACKAGES="installer sac sis"
 
 for i in $PACKAGES
 do
 cd scalix-$i
 install -d build
+#%{__sed} -i s/com.sun.xml.messaging.saaj.soap.impl.TextImpl/com.sun.xml.internal.messaging.saaj.soap.impl.TextImpl/ caa/com/scalix/caa/soap/SOAPHelper.java
 %ant -Dbuild.sysclasspath=only
 cd -
 done
