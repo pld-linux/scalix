@@ -38,6 +38,7 @@ BuildRequires:	java-ical4j
 BuildRequires:	java-log4j
 BuildRequires:	java-lucene-contrib
 BuildRequires:	java-mail
+BuildRequires:	java-saaj
 BuildRequires:	java-servletapi5
 %{?with_java_sun:BuildRequires: java-sun}
 BuildRequires:	python-devel >= 2.2.2
@@ -84,7 +85,7 @@ SIS for Scalix
 
 %build
 
-CLASSPATH=$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jsp-api mail servlet)
+CLASSPATH=$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jsp-api mail saaj servlet)
 #PACKAGES="installer mobile platform sac sis"
 PACKAGES="installer sac sis"
 
