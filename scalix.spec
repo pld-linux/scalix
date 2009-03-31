@@ -18,6 +18,9 @@ Group:		Applications/WWW
 Source0:	http://downloads.scalix.com/.opensource/11.4.3/%{name}-%{version}-GA-source.tgz
 # Source0-md5:	fb4794f841319ed07605a8619e5a9c36
 Source1:	%{name}-sis-context.xml
+Source2:	%{name}-caa-services.xml
+Source3:	%{name}-admin-console.xml
+Source4:	%{name}-res.xml
 Patch0:		%{name}-python25_26.patch
 Patch1:		%{name}-merlin-fixes.patch
 Patch2:		%{name}-build.patch
@@ -26,10 +29,12 @@ BuildRequires:	ant >= 1.6.5
 BuildRequires:	ant-junit
 BuildRequires:	ant-nodeps
 BuildRequires:	antlr >= 2.7.6
+BuildRequires:	apache-tomcat
 BuildRequires:	asm2 >= 2.2.3
 BuildRequires:	java-commons-cli
 BuildRequires:	java-commons-codec
 BuildRequires:	java-commons-collections
+BuildRequires:	java-commons-el
 BuildRequires:	java-commons-httpclient
 BuildRequires:	java-commons-lang
 BuildRequires:	java-commons-logging
@@ -42,7 +47,6 @@ BuildRequires:	java-saaj
 BuildRequires:	java-servletapi5
 %{?with_java_sun:BuildRequires: java-sun}
 BuildRequires:	python-devel >= 2.2.2
-Requires:	apache-tomcat
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -63,6 +67,14 @@ Group:		Applications/WWW
 
 %description mobile
 Mobile Scalix
+
+%package sac
+Summary:	Scalix SAC
+Group:		Applications/WWW
+Requires:	%{name} = %{version}
+
+%description sac
+SAC for Scalix
 
 %package sis
 Summary:	Scalix SIS
@@ -85,7 +97,7 @@ SIS for Scalix
 
 %build
 
-CLASSPATH=$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jsp-api mail saaj servlet)
+CLASSPATH=caa/build/WEB-INF/classes:res/build/WEB-INF/classes:$(build-classpath-directory %{_datadir}/tomcat/common/lib/):$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-el commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jsp-api mail saaj servlet)
 #PACKAGES="installer mobile platform sac sis"
 PACKAGES="installer sac sis"
 
@@ -102,13 +114,24 @@ done
 rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix
+install -d $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost
 
 # Installer
 install -d $RPM_BUILD_ROOT%{_sbindir}
 install scalix-installer/dist/scalix-installer $RPM_BUILD_ROOT%{_sbindir}/scalix-installer
 
+# SAC
+install -d $RPM_BUILD_ROOT%{_datadir}/scalix/{caa-services,scalix-admin-console,scalix-res}
+
+install %{SOURCE2} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/
+install %{SOURCE3} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/
+install %{SOURCE4} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/
+
+install scalix-sac/caa/dist/caa-services.war $RPM_BUILD_ROOT%{_datadir}/scalix/caa-services
+install scalix-sac/console/scalix-admin-console.war $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-admin-console
+install scalix-sac/res/dist/scalix-res.war $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-res
+
 # SIS
-install -d $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-sis.xml
 cp -a scalix-sis/build/war $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-sis
 
@@ -122,6 +145,15 @@ rm -rf $RPM_BUILD_ROOT
 %files installer
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/scalix-installer
+
+%files sac
+%defattr(644,root,root,755)
+%config(noreplace) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-caa-services.xml
+%config(noreplace) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-admin-console.xml
+%config(noreplace) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-res.xml
+%{_datadir}/scalix/caa-services
+%{_datadir}/scalix/scalix-admin-console
+%{_datadir}/scalix/scalix-res
 
 %files sis
 %defattr(644,root,root,755)
