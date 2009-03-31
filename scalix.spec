@@ -46,9 +46,11 @@ BuildRequires:	java-ical4j
 BuildRequires:	java-log4j
 BuildRequires:	java-lucene-contrib
 BuildRequires:	java-mail
+BuildRequires:	java-jdom
 BuildRequires:	java-saaj
 BuildRequires:	java-servletapi5
 %{?with_java_sun:BuildRequires: java-sun}
+BuildRequires:	java-xerces
 BuildRequires:	python-devel >= 2.2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -100,9 +102,8 @@ SIS for Scalix
 
 %build
 
-CLASSPATH=caa/build/WEB-INF/classes:res/build/WEB-INF/classes:lib/spring.jar:$(build-classpath-directory %{_datadir}/tomcat/common/lib/):$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-el commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jsp-api mail saaj servlet)
-#PACKAGES="installer mobile platform sac sis"
-PACKAGES="installer mobile sac sis"
+CLASSPATH=caa/build/WEB-INF/classes:res/build/WEB-INF/classes:lib/spring.jar:lib/hibernate3.jar:lib/c3p0-0.9.1.jar:$(build-classpath-directory %{_datadir}/tomcat/common/lib/):$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-el commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jdom jsp-api mail saaj servlet xalan xercesImpl)
+PACKAGES="installer mobile platform sac sis"
 
 for i in $PACKAGES
 do
