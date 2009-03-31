@@ -3,12 +3,13 @@
 # - package spring framework: http://springsource.org
 # - after packaging spring, use it instead of interla spring.jar from scalix
 # - descriptions/summaries
-%bcond_with     java_sun        # build with java-sun
-
+# Conditional build:
 %if "%{pld_release}" == "ti"
-%define with_java_sun   1
+%bcond_without	java_sun	# build with gcj
+%else
+%bcond_with	java_sun	# build with java-sun
 %endif
-
+#
 %include        /usr/lib/rpm/macros.java
 Summary:	Scalix Platform
 Name:		scalix
@@ -43,15 +44,16 @@ BuildRequires:	java-commons-lang
 BuildRequires:	java-commons-logging
 %{!?with_java_sun:BuildRequires:        java-gcj-compat-devel}
 BuildRequires:	java-ical4j
+BuildRequires:	java-jdom
 BuildRequires:	java-log4j
 BuildRequires:	java-lucene-contrib
 BuildRequires:	java-mail
-BuildRequires:	java-jdom
 BuildRequires:	java-saaj
 BuildRequires:	java-servletapi5
 %{?with_java_sun:BuildRequires: java-sun}
 BuildRequires:	java-xerces
 BuildRequires:	python-devel >= 2.2.2
+BuildRequires:	rpm >= 4.4.9-56
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
