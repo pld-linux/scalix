@@ -1,6 +1,8 @@
 # TODO:
-# - add subpackages for $PACKAGES
-# - fix tomcat.home
+# - add PLD as Supported distro for installer
+# - package spring framework: http://springsource.org
+# - after packaging spring, use it instead of interla spring.jar from scalix
+# - descriptions/summaries
 %bcond_with     java_sun        # build with java-sun
 
 %if "%{pld_release}" == "ti"
@@ -21,6 +23,7 @@ Source1:	%{name}-sis-context.xml
 Source2:	%{name}-caa-services.xml
 Source3:	%{name}-admin-console.xml
 Source4:	%{name}-res.xml
+Source5:	%{name}-mobile.xml
 Patch0:		%{name}-python25_26.patch
 Patch1:		%{name}-merlin-fixes.patch
 Patch2:		%{name}-build.patch
@@ -97,9 +100,9 @@ SIS for Scalix
 
 %build
 
-CLASSPATH=caa/build/WEB-INF/classes:res/build/WEB-INF/classes:$(build-classpath-directory %{_datadir}/tomcat/common/lib/):$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-el commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jsp-api mail saaj servlet)
+CLASSPATH=caa/build/WEB-INF/classes:res/build/WEB-INF/classes:lib/spring.jar:$(build-classpath-directory %{_datadir}/tomcat/common/lib/):$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-el commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jsp-api mail saaj servlet)
 #PACKAGES="installer mobile platform sac sis"
-PACKAGES="installer sac sis"
+PACKAGES="installer mobile sac sis"
 
 for i in $PACKAGES
 do
@@ -119,6 +122,11 @@ install -d $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost
 # Installer
 install -d $RPM_BUILD_ROOT%{_sbindir}
 install scalix-installer/dist/scalix-installer $RPM_BUILD_ROOT%{_sbindir}/scalix-installer
+
+# Mobile
+install -d $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-mobile
+install %{SOURCE5} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/
+install scalix-mobile/build/scalix-mobile.war $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-mobile
 
 # SAC
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix/{caa-services,scalix-admin-console,scalix-res}
@@ -145,6 +153,11 @@ rm -rf $RPM_BUILD_ROOT
 %files installer
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/scalix-installer
+
+%files mobile
+%defattr(644,root,root,755)
+%config(noreplace) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-mobile.xml
+%{_datadir}/scalix/scalix-mobile
 
 %files sac
 %defattr(644,root,root,755)
