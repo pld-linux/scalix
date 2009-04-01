@@ -3,6 +3,7 @@
 # - package spring framework: http://springsource.org
 # - after packaging spring, use it instead of interla spring.jar from scalix
 # - descriptions/summaries
+#
 # Conditional build:
 %if "%{pld_release}" == "ti"
 %bcond_without	java_sun	# build with gcj
@@ -11,7 +12,7 @@
 %endif
 #
 %include        /usr/lib/rpm/macros.java
-Summary:	Scalix Platform
+Summary:	Scalix Collaboration Platform
 Name:		scalix
 Version:	11.4.3
 Release:	0.1
@@ -56,7 +57,16 @@ BuildRequires:	rpm >= 4.4.9-56
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Scalix Platform
+Scalix Collaboration Platform is a robust, enterprise-class email and
+group calendaring solution that is the open alternative to Exchange.
+It integrates via open standards with your existing and future
+messaging clients, infrastructure, and applications, protecting your
+investments and giving you choice. It provides full-feature support of
+Outlook and is directory agnostic.
+
+The Scalix Server, providing comprehensive messaging with email, group
+calendaring, contacts, tasks, and shared public folders, Scalix Proxy
+Folders as well as a native Linux file system for your message store.
 
 %package installer
 Summary:	Scalix Platform Installer
