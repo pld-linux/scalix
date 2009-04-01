@@ -144,11 +144,9 @@ install scalix-mobile/build/scalix-mobile.war $RPM_BUILD_ROOT%{_datadir}/scalix/
 
 # SAC
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix/{caa-services,scalix-admin-console,scalix-res}
-
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-caa-services.xml
 install %{SOURCE3} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-admin-console.xml
 install %{SOURCE4} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-res.xml
-
 install scalix-sac/caa/dist/caa-services.war $RPM_BUILD_ROOT%{_datadir}/scalix/caa-services
 install scalix-sac/console/scalix-admin-console.war $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-admin-console
 install scalix-sac/res/dist/scalix-res.war $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-res
