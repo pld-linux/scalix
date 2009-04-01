@@ -22,10 +22,10 @@ Group:		Applications/WWW
 Source0:	http://downloads.scalix.com/.opensource/11.4.3/%{name}-%{version}-GA-source.tgz
 # Source0-md5:	fb4794f841319ed07605a8619e5a9c36
 Source1:	%{name}-sis-context.xml
-Source2:	%{name}-caa-services.xml
-Source3:	%{name}-admin-console.xml
-Source4:	%{name}-res.xml
-Source5:	%{name}-mobile.xml
+Source2:	%{name}-caa-services-context.xml
+Source3:	%{name}-admin-console-context.xml
+Source4:	%{name}-res-context.xml
+Source5:	%{name}-mobile-context.xml
 Patch0:		%{name}-python25_26.patch
 Patch1:		%{name}-merlin-fixes.patch
 URL:		http://www.scalix.com/community/
@@ -114,7 +114,7 @@ SIS for Scalix
 required_jars="
 	activation antlr asm2 commons-cli commons-codec commons-collections commons-el
 	commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jasper-compiler
-	jasper-runtime jdom jsp-api saaj servlet xalan xercesImpl
+	jasper-runtime jdom jsp-api mail saaj servlet xalan xercesImpl
 "
 CLASSPATH=caa/build/WEB-INF/classes:res/build/WEB-INF/classes:lib/spring.jar:lib/hibernate3.jar:lib/c3p0-0.9.1.jar:$(build-classpath $required_jars)
 
@@ -145,9 +145,9 @@ install scalix-mobile/build/scalix-mobile.war $RPM_BUILD_ROOT%{_datadir}/scalix/
 # SAC
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix/{caa-services,scalix-admin-console,scalix-res}
 
-install %{SOURCE2} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/
-install %{SOURCE3} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/
-install %{SOURCE4} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/
+install %{SOURCE2} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-caa-services.xml
+install %{SOURCE3} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-admin-console.xml
+install %{SOURCE4} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-res.xml
 
 install scalix-sac/caa/dist/caa-services.war $RPM_BUILD_ROOT%{_datadir}/scalix/caa-services
 install scalix-sac/console/scalix-admin-console.war $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-admin-console
