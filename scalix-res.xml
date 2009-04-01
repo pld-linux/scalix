@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id$ -->
-<Context path="/scalix-res" docBase="/usr/share/scalix/scalix-res"
-        privileged="false" allowLinking="true">
-
-</Context>

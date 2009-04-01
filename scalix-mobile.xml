@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id$ -->
-<Context path="/scalix-mobile" docBase="/usr/share/scalix/scalix-mobile"
-        privileged="false" allowLinking="true">
-
-</Context>
