@@ -87,7 +87,7 @@ Mobile Scalix
 %package sac
 Summary:	Scalix SAC
 Group:		Applications/WWW
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description sac
 SAC for Scalix
@@ -95,7 +95,7 @@ SAC for Scalix
 %package sis
 Summary:	Scalix SIS
 Group:		Applications/WWW
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description sis
 SIS for Scalix
@@ -111,23 +111,25 @@ SIS for Scalix
 %patch1 -p0
 
 %build
-
-CLASSPATH=caa/build/WEB-INF/classes:res/build/WEB-INF/classes:lib/spring.jar:lib/hibernate3.jar:lib/c3p0-0.9.1.jar:$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-el commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jasper-compiler jasper-runtime jdom jsp-api saaj servlet xalan xercesImpl)
+required_jars="
+	activation antlr asm2 commons-cli commons-codec commons-collections commons-el
+	commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jasper-compiler
+	jasper-runtime jdom jsp-api saaj servlet xalan xercesImpl
+"
+CLASSPATH=caa/build/WEB-INF/classes:res/build/WEB-INF/classes:lib/spring.jar:lib/hibernate3.jar:lib/c3p0-0.9.1.jar:$(build-classpath $required_jars)
 
 PACKAGES="installer mobile platform sac sis"
 
-for i in $PACKAGES
-do
-cd scalix-$i
-install -d build
-#%{__sed} -i s/com.sun.xml.messaging.saaj.soap.impl.TextImpl/com.sun.xml.internal.messaging.saaj.soap.impl.TextImpl/ caa/com/scalix/caa/soap/SOAPHelper.java
-%ant -Dbuild.sysclasspath=only
-cd -
+for i in $PACKAGES; do
+	cd scalix-$i
+	install -d build
+	#%{__sed} -i s/com.sun.xml.messaging.saaj.soap.impl.TextImpl/com.sun.xml.internal.messaging.saaj.soap.impl.TextImpl/ caa/com/scalix/caa/soap/SOAPHelper.java
+	%ant -Dbuild.sysclasspath=only
+	cd -
 done
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix
 install -d $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost
 
@@ -168,19 +170,19 @@ rm -rf $RPM_BUILD_ROOT
 
 %files mobile
 %defattr(644,root,root,755)
-%config(noreplace) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-mobile.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-mobile.xml
 %{_datadir}/scalix/scalix-mobile
 
 %files sac
 %defattr(644,root,root,755)
-%config(noreplace) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-caa-services.xml
-%config(noreplace) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-admin-console.xml
-%config(noreplace) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-res.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-caa-services.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-admin-console.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-res.xml
 %{_datadir}/scalix/caa-services
 %{_datadir}/scalix/scalix-admin-console
 %{_datadir}/scalix/scalix-res
 
 %files sis
 %defattr(644,root,root,755)
-%config(noreplace) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-sis.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-sis.xml
 %{_datadir}/scalix/scalix-sis
