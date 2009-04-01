@@ -27,13 +27,12 @@ Source4:	%{name}-res.xml
 Source5:	%{name}-mobile.xml
 Patch0:		%{name}-python25_26.patch
 Patch1:		%{name}-merlin-fixes.patch
-Patch2:		%{name}-build.patch
 URL:		http://www.scalix.com/community/
 BuildRequires:	ant >= 1.6.5
 BuildRequires:	ant-junit
 BuildRequires:	ant-nodeps
 BuildRequires:	antlr >= 2.7.6
-BuildRequires:	apache-tomcat
+BuildRequires:	apache-tomcat-jasper
 BuildRequires:	asm2 >= 2.2.3
 BuildRequires:	java-commons-cli
 BuildRequires:	java-commons-codec
@@ -100,11 +99,11 @@ SIS for Scalix
 %{__tar} zxf scalix-sis-src.tgz
 %patch0 -p0
 %patch1 -p0
-#%patch2 -p1
 
 %build
 
-CLASSPATH=caa/build/WEB-INF/classes:res/build/WEB-INF/classes:lib/spring.jar:lib/hibernate3.jar:lib/c3p0-0.9.1.jar:$(build-classpath-directory %{_datadir}/tomcat/common/lib/):$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-el commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jdom jsp-api mail saaj servlet xalan xercesImpl)
+CLASSPATH=caa/build/WEB-INF/classes:res/build/WEB-INF/classes:lib/spring.jar:lib/hibernate3.jar:lib/c3p0-0.9.1.jar:$(build-classpath activation antlr asm2 commons-cli commons-codec commons-collections commons-el commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jasper-compiler jasper-runtime jdom jsp-api saaj servlet xalan xercesImpl)
+
 PACKAGES="installer mobile platform sac sis"
 
 for i in $PACKAGES
