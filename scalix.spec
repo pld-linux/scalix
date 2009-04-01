@@ -1,7 +1,7 @@
 # TODO:
 # - add PLD as Supported distro for installer
 # - package spring framework: http://springsource.org
-# - after packaging spring, use it instead of interla spring.jar from scalix
+# - after packaging spring, use it instead of internal spring.jar from scalix
 # - descriptions/summaries
 #
 # Conditional build:
@@ -15,7 +15,7 @@
 Summary:	Scalix Collaboration Platform
 Name:		scalix
 Version:	11.4.3
-Release:	0.1
+Release:	0.2
 # http://www.scalix.com/community/opensource/licensing.php
 License:	Scalix Public License (SPL)
 Group:		Applications/WWW
@@ -26,6 +26,7 @@ Source2:	%{name}-caa-services-context.xml
 Source3:	%{name}-admin-console-context.xml
 Source4:	%{name}-res-context.xml
 Source5:	%{name}-mobile-context.xml
+Source6:	%{name}-platform-context.xml
 Patch0:		%{name}-python25_26.patch
 Patch1:		%{name}-merlin-fixes.patch
 URL:		http://www.scalix.com/community/
@@ -84,6 +85,14 @@ Group:		Applications/WWW
 %description mobile
 Mobile Scalix
 
+%package platform
+Summary:        Scalix Platform
+Group:          Applications/WWW
+Requires:       %{name} = %{version}-%{release}
+
+%description platform
+Scalix Platform
+
 %package sac
 Summary:	Scalix SAC
 Group:		Applications/WWW
@@ -116,7 +125,7 @@ required_jars="
 	commons-httpclient commons-lang commons-logging ical4j log4j lucene lucene-snowball jasper-compiler
 	jasper-runtime jdom jsp-api mail saaj servlet xalan xercesImpl
 "
-CLASSPATH=caa/build/WEB-INF/classes:res/build/WEB-INF/classes:lib/spring.jar:lib/hibernate3.jar:lib/c3p0-0.9.1.jar:$(build-classpath $required_jars)
+CLASSPATH=caa/build/WEB-INF/classes:res/build/WEB-INF/classes:lib/spring.jar:lib/hibernate3.jar:lib/c3p0-0.9.1.jar:lib/mail.jar:$(build-classpath $required_jars)
 
 PACKAGES="installer mobile platform sac sis"
 
@@ -139,8 +148,13 @@ install scalix-installer/dist/scalix-installer $RPM_BUILD_ROOT%{_sbindir}/scalix
 
 # Mobile
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-mobile
-install %{SOURCE5} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/
+install %{SOURCE5} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-mobile.xml
 install scalix-mobile/build/scalix-mobile.war $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-mobile
+
+# Platform
+install -d $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-platform
+install %{SOURCE6} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-platform.xml
+install scalix-platform/build/scalix-platform.war $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-platform
 
 # SAC
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix/{caa-services,scalix-admin-console,scalix-res}
@@ -170,6 +184,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-mobile.xml
 %{_datadir}/scalix/scalix-mobile
+
+%files platform
+%defattr(644,root,root,755)
+%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-platform.xml
+%{_datadir}/scalix/scalix-platform
 
 %files sac
 %defattr(644,root,root,755)
