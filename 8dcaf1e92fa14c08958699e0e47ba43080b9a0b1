@@ -1,0 +1,3 @@
+- BR: java-lucene-contrib
+- -sis subpackage now compiles!
+- added -sis subpackage (without files for now)
