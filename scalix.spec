@@ -148,19 +148,19 @@ install scalix-installer/dist/scalix-installer $RPM_BUILD_ROOT%{_sbindir}/scalix
 
 # Mobile
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix/mobile
-install %{SOURCE5} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#mobile.xml
+install %{SOURCE5} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/"scalix#mobile.xml"
 cp -a scalix-mobile/build/war/* $RPM_BUILD_ROOT%{_datadir}/scalix/mobile
 
 # Platform
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix/platform
-install %{SOURCE6} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#platform.xml
+install %{SOURCE6} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/"scalix#platform.xml"
 cp -a scalix-platform/build/war/* $RPM_BUILD_ROOT%{_datadir}/scalix/platform
 
 # SAC
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix/{caa-services,admin-console,res}
-install %{SOURCE2} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#caa-services.xml
-install %{SOURCE3} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#admin-console.xml
-install %{SOURCE4} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#res.xml
+install %{SOURCE2} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/"scalix#caa-services.xml"
+install %{SOURCE3} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/"scalix#admin-console.xml"
+install %{SOURCE4} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/"scalix#res.xml"
 cp -a scalix-sac/caa/build/* $RPM_BUILD_ROOT%{_datadir}/scalix/caa-services
 cp -a scalix-sac/console/build/* $RPM_BUILD_ROOT%{_datadir}/scalix/admin-console
 cp -a scalix-sac/res/build/* $RPM_BUILD_ROOT%{_datadir}/scalix/res
@@ -168,7 +168,7 @@ cp -a scalix-sac/res/build/* $RPM_BUILD_ROOT%{_datadir}/scalix/res
 
 # SIS
 install -d  $RPM_BUILD_ROOT%{_datadir}/scalix/sis
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#sis.xml
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/"scalix#sis.xml"
 cp -a scalix-sis/build/war/* $RPM_BUILD_ROOT%{_datadir}/scalix/sis
 
 %clean
