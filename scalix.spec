@@ -79,19 +79,19 @@ Requires:	perl-base
 Installer for Scalix Platform
 
 %package mobile
-Summary:	Scalix Platform for Mobile
+Summary:	Scalix Mobile Web Client
 Group:		Applications/WWW
 
 %description mobile
-Mobile Scalix
+Scalix Mobile Web Client.
 
 %package platform
-Summary:        Scalix Platform
-Group:          Applications/WWW
-Requires:       %{name} = %{version}-%{release}
+Summary:	Scalix Webservices
+Group:		Applications/WWW
+Requires:	%{name} = %{version}-%{release}
 
 %description platform
-Scalix Platform
+Scalix Webservices.
 
 %package sac
 Summary:	Scalix SAC
@@ -99,15 +99,16 @@ Group:		Applications/WWW
 Requires:	%{name} = %{version}-%{release}
 
 %description sac
-SAC for Scalix
+This package includes Scalix Administration Console, Scalix Remote
+Execution Service and CAA Entry Point.
 
 %package sis
-Summary:	Scalix SIS
+Summary:	Scalix Search and Index Server
 Group:		Applications/WWW
 Requires:	%{name} = %{version}-%{release}
 
 %description sis
-SIS for Scalix
+Scalix Search and Index Server
 
 %prep
 %setup -qc
