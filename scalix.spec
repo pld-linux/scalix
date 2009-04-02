@@ -149,12 +149,12 @@ install scalix-installer/dist/scalix-installer $RPM_BUILD_ROOT%{_sbindir}/scalix
 # Mobile
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-mobile
 install %{SOURCE5} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-mobile.xml
-install scalix-mobile/build/scalix-mobile.war $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-mobile
+cp -a scalix-mobile/build/war $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-mobile
 
 # Platform
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-platform
 install %{SOURCE6} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-platform.xml
-install scalix-platform/build/scalix-platform.war $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-platform
+cp -a scalix-platform/build/war $RPM_BUILD_ROOT%{_datadir}/scalix/scalix-platform
 
 # SAC
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix/{caa-services,scalix-admin-console,scalix-res}
