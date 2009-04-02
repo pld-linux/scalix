@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
-<Context path="/scalix-admin-console" docBase="/usr/share/scalix/scalix-admin-console"
+<Context path="/scalix/admin-console" docBase="/usr/share/scalix/admin-console"
         privileged="false" allowLinking="true">
 
 </Context>
