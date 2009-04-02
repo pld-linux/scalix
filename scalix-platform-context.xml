@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
-<Context path="/scalix/scalix-platform" docBase="/usr/share/scalix/platform"
+<Context path="/scalix/platform" docBase="/usr/share/scalix/platform"
         privileged="false" allowLinking="true">
 
 </Context>
