@@ -148,26 +148,27 @@ install scalix-installer/dist/scalix-installer $RPM_BUILD_ROOT%{_sbindir}/scalix
 
 # Mobile
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix/mobile
-install %{SOURCE5} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-mobile.xml
+install %{SOURCE5} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#mobile.xml
 cp -a scalix-mobile/build/war/* $RPM_BUILD_ROOT%{_datadir}/scalix/mobile
 
 # Platform
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix/platform
-install %{SOURCE6} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-platform.xml
+install %{SOURCE6} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#platform.xml
 cp -a scalix-platform/build/war/* $RPM_BUILD_ROOT%{_datadir}/scalix/platform
 
 # SAC
 install -d $RPM_BUILD_ROOT%{_datadir}/scalix/{caa-services,admin-console,res}
-install %{SOURCE2} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-caa-services.xml
-install %{SOURCE3} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-admin-console.xml
-install %{SOURCE4} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-res.xml
-install scalix-sac/caa/dist/caa-services.war $RPM_BUILD_ROOT%{_datadir}/scalix/caa-services
-install scalix-sac/console/scalix-admin-console.war $RPM_BUILD_ROOT%{_datadir}/scalix/admin-console
-install scalix-sac/res/dist/scalix-res.war $RPM_BUILD_ROOT%{_datadir}/scalix/res
+install %{SOURCE2} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#caa-services.xml
+install %{SOURCE3} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#admin-console.xml
+install %{SOURCE4} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#res.xml
+cp -a scalix-sac/caa/build/* $RPM_BUILD_ROOT%{_datadir}/scalix/caa-services
+cp -a scalix-sac/console/build/* $RPM_BUILD_ROOT%{_datadir}/scalix/admin-console
+cp -a scalix-sac/res/build/* $RPM_BUILD_ROOT%{_datadir}/scalix/res
+#cp -a scalix-sac/ubermanager/build/* $RPM_BUILD_ROOT%{_datadir}/scalix/ubermanager
 
 # SIS
 install -d  $RPM_BUILD_ROOT%{_datadir}/scalix/sis
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-sis.xml
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#sis.xml
 cp -a scalix-sis/build/war/* $RPM_BUILD_ROOT%{_datadir}/scalix/sis
 
 %clean
@@ -183,24 +184,24 @@ rm -rf $RPM_BUILD_ROOT
 
 %files mobile
 %defattr(644,root,root,755)
-%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-mobile.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#mobile.xml
 %{_datadir}/scalix/mobile
 
 %files platform
 %defattr(644,root,root,755)
-%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-platform.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#platform.xml
 %{_datadir}/scalix/platform
 
 %files sac
 %defattr(644,root,root,755)
-%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-caa-services.xml
-%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-admin-console.xml
-%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-res.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#caa-services.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#admin-console.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#res.xml
 %{_datadir}/scalix/caa-services
 %{_datadir}/scalix/admin-console
 %{_datadir}/scalix/res
 
 %files sis
 %defattr(644,root,root,755)
-%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix-sis.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/scalix#sis.xml
 %{_datadir}/scalix/sis
