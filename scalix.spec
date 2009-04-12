@@ -55,6 +55,7 @@ BuildRequires:	java-servletapi5
 BuildRequires:	java-xerces
 BuildRequires:	python-devel >= 2.2.2
 BuildRequires:	rpm >= 4.4.9-56
+Requires:	group(servlet)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
