@@ -5,7 +5,6 @@
 # - descriptions/summaries
 #
 # Conditional build:
-%include        /usr/lib/rpm/macros.java
 Summary:	Scalix Collaboration Platform
 Name:		scalix
 Version:	11.4.3
